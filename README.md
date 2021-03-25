@@ -42,7 +42,7 @@ docker rm mvc_container
 1. Create heroku account
 2. Create application
 3. Choose container registry as deployment method
-4. Build the docker locally
+4. Make sure application works locally
 
 
 Login to heroku
