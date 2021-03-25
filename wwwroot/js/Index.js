@@ -8,7 +8,9 @@ $(document).ready(function () {
             url: `/Home/AddMember?member=${newcomerName}`,
             success: function (data) {
                 // Remember string interpolation
-                $("#list").append(`<li>${data}</li>`);
+                $("#list").append(`<li class="member">
+		            <span class="name">${data}</span><span class="delete fa fa-remove"></span><i class="fa fa-pencil"></i>
+		        </li>`);
 
                 $("#newcomer").val("");
             },
@@ -24,15 +26,15 @@ $(document).ready(function () {
 
     $(".delete").click(function () {
         var targetMemberTag = $(this).parent('li');
-        var id = targetMemberTag.attr('memberID');
+        var index = targetMemberTag.index(targetMemberTag.parent());
         $.ajax({
-            url: `/Home/RemoveMember/${id}`,
+            url: `/Home/RemoveMember/${index}`,
             type: 'DELETE',
             success: function () {
                 targetMemberTag.remove();
             },
             error: function () {
-                alert(`Failed to delete member with index=${id}`);
+                alert(`Failed to delete member with index=${index}`);
             }
         })
     })
