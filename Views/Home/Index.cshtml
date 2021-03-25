@@ -20,8 +20,8 @@
     {
         var member = Model.Members[i];
 
-        <li class="member">
-            <span class="name">@member</span><span class="delete fa fa-pencil"></span><i class="fa fa-remove"></i>
+        <li class="member" memberId="@i">
+            <span class="name">@member</span><span class="delete fa fa-remove"></span><i class="fa fa-pencil"></i>
         </li>
     }
 </ul>
@@ -29,7 +29,7 @@
 <input id="newcomer" title="Name" type="text" />
 <button id="add" class="btn btn-primary">
     <i class="fa fa-plus-circle"></i>
-    Add new commer
+    Add newcomer
 </button>
 <button id="clear" class="btn btn-secondary">
     <i class="fa fa-cut"></i>

@@ -21,4 +21,19 @@ $(document).ready(function () {
     $("#clear").click(function () {
         $("#newcomer").val("");
     })
+
+    $(".delete").click(function () {
+        var targetMemberTag = $(this).parent('li');
+        var id = targetMemberTag.attr('memberID');
+        $.ajax({
+            url: `/Home/RemoveMember/${id}`,
+            type: 'DELETE',
+            success: function () {
+                targetMemberTag.remove();
+            },
+            error: function () {
+                alert(`Failed to delete member with index=${id}`);
+            }
+        })
+    })
 });
