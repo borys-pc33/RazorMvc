@@ -24,7 +24,8 @@ $(document).ready(function () {
         $("#newcomer").val("");
     })
 
-    $(".delete").click(function () {
+    // Bind event to dynamically created element: https://makitweb.com/attach-event-to-dynamically-created-elements-with-jquery
+    $("#list").on("click", ".delete", function () {
         var targetMemberTag = $(this).parent('li');
         var index = targetMemberTag.index(targetMemberTag.parent());
         $.ajax({
