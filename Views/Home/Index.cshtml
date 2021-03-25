@@ -11,9 +11,14 @@
 <h2>Here is our classroom</h2>
 
 <ul id="list">
-    <li>Borys</li>
-    <li>Liova</li>
-    <li>Orest</li>
+    @for (var i = 0; i < Model.Members.Count; i++)
+    {
+        var member = Model.Members[i];
+
+    <li class="member">
+        @member
+    </li>
+    }
 </ul>
 
 <input id="newcomer" title="Name" type="text" />
