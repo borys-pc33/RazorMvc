@@ -1,41 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RazorMvc.Models;
+using RazorMvc.Services;
 
 namespace RazorMvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly InternshipClass _internshipClass;
         private readonly ILogger<HomeController> _logger;
+        private readonly InternshipService intershipService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, InternshipService intershipService)
         {
-            _internshipClass = new InternshipClass();
             _logger = logger;
+            this.intershipService = intershipService;
         }
 
         public IActionResult Index()
         {
-            return View(_internshipClass);
+            return View(intershipService.GetClass());
         }
 
         [HttpDelete]
         public void RemoveMember(int index)
         {
-            _internshipClass.Members.RemoveAt(index);
+            intershipService.RemoveMember(index);
         }
 
         [HttpGet]
         public string AddMember(string member)
         {
-            _internshipClass.Members.Add(member);
-            return member;
+            return intershipService.AddMember(member);
         }
 
         public IActionResult Privacy()
