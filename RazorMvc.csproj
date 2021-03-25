@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="out\**" />
+    <Content Remove="out\**" />
+    <EmbeddedResource Remove="out\**" />
     <None Remove="*.log" />
+    <None Remove="out\**" />
   </ItemGroup>
   
   <ItemGroup>
