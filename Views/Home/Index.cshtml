@@ -1,8 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Information about our classroom";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section scripts {
+    <script type="text/javascript" src="~/js/Index.js"></script>
+}
+
+<h2>Our rules</h2>
+<img src="img/Our rules.jpg" alt="Our rules" width="400" />
+<h2>Here is our classroom</h2>
+
+<ul id="list">
+    <li>Borys</li>
+    <li>Liova</li>
+    <li>Orest</li>
+</ul>
+
+<input id="newcomer" title="Name" type="text" />
+<button id="add">Add new commer</button>
