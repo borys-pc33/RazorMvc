@@ -2,6 +2,11 @@
     ViewData["Title"] = "Information about our classroom";
 }
 
+@section styles {
+    <!-- Read about this here https://fontawesome.com/icons?d=gallery&p=2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
+
 @section scripts {
     <script type="text/javascript" src="~/js/Index.js"></script>
 }
@@ -15,12 +20,18 @@
     {
         var member = Model.Members[i];
 
-    <li class="member">
-        @member
-    </li>
+        <li class="member">
+            <span class="name">@member</span><span class="delete fa fa-pencil"></span><i class="fa fa-remove"></i>
+        </li>
     }
 </ul>
 
 <input id="newcomer" title="Name" type="text" />
-<button id="add" class="btn btn-primary">Add new commer</button>
-<button id="clear" class="btn btn-secondary"> Clear</button>
+<button id="add" class="btn btn-primary">
+    <i class="fa fa-plus-circle"></i>
+    Add new commer
+</button>
+<button id="clear" class="btn btn-secondary">
+    <i class="fa fa-cut"></i>
+    Clear
+</button>
