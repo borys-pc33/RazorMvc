@@ -9,7 +9,7 @@ $(document).ready(function () {
             success: function (data) {
                 // Remember string interpolation
                 $("#list").append(`<li class="member">
-		            <span class="name">${data}</span><span class="delete fa fa-remove"></span><i class="fa fa-pencil"></i>
+		            <span class="name">${data}</span><span class="delete fa fa-remove"></span><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
 		        </li>`);
 
                 $("#newcomer").val("");
@@ -26,7 +26,7 @@ $(document).ready(function () {
 
     // Bind event to dynamically created element: https://makitweb.com/attach-event-to-dynamically-created-elements-with-jquery
     $("#list").on("click", ".delete", function () {
-        var targetMemberTag = $(this).parent('li');
+        var targetMemberTag = $(this).closest('li');
         var index = targetMemberTag.index(targetMemberTag.parent());
         $.ajax({
             url: `/Home/RemoveMember/${index}`,
@@ -38,5 +38,21 @@ $(document).ready(function () {
                 alert(`Failed to delete member with index=${index}`);
             }
         })
+    })
+
+    $("#list").on("click", ".startEdit", function () {
+        var targetMemberTag = $(this).closest('li');
+        var index = targetMemberTag.index(targetMemberTag.parent());
+        var currentName = targetMemberTag.find(".name").text();
+        $('#editClassmate').attr("memberIndex", index);
+        $('#classmateName').val(currentName);
+    })
+
+    $("#editClassmate").on("click", "#submit", function () {
+        console.log('submit changes to server');
+    })
+
+    $("#editClassmate").on("click", "#cancel", function () {
+        console.log('cancel changes');
     })
 });

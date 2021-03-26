@@ -11,6 +11,32 @@
     <script type="text/javascript" src="~/js/Index.js"></script>
 }
 
+@section modalWindows {
+    <!-- Modal -->
+    <div class="modal fade" id="editClassmate" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Classmate</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Name
+                        <input id="classmateName" title="Name" type="text">
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="submit" type="button" class="btn" data-dismiss="modal">Submit</button>
+                    <button id="cancel" type="button" class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
 <h2>Our rules</h2>
 <img src="img/Our rules.jpg" alt="Our rules" width="400" />
 <h2>Here is our classroom</h2>
@@ -21,7 +47,10 @@
         var member = Model.Members[i];
 
         <li class="member">
-            <span class="name">@member</span><span class="delete fa fa-remove"></span><i class="fa fa-pencil"></i>
+            <div class="memberInfo">
+                <span class="name">@member</span><i class="delete fa fa-remove"></i>
+                <i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
+            </div>
         </li>
     }
 </ul>
