@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging.Abstractions;
 using RazorMvc.Utilities;
 using System;
+using System.IO;
+using System.Reflection;
 using WebAPI;
 using WebAPI.Controllers;
 using Xunit;
@@ -41,6 +43,35 @@ namespace RazorMvc.Tests
             // Assert
             // Forecast is volatile so make sure to change the value accordingly
             Assert.Equal(285.39, weatherForecastForTommorrow.TemperatureK);
+        }
+
+        [Fact]
+        public void ConvertWeatherApiJsonToWeatherForecast()
+        {
+            // Assume
+            string content = ReadTextFromEmbeddedResource("RazorMvc.Tests.WeatherForecastExample.json");
+
+            Microsoft.Extensions.Logging.ILogger<WeatherForecastController> nullLogger = new NullLogger<WeatherForecastController>();
+            var weatherForecastController = new WeatherForecastController(nullLogger);
+
+            // Act
+            var weatherForcasts = weatherForecastController.ConvertResponseToWeatherForecastList(content);
+            WeatherForecast weatherForecastForTommorrow = weatherForcasts[1];
+
+            // Assert
+            // Forecast is volatile so make sure to change the value accordingly
+            Assert.Equal(285.39, weatherForecastForTommorrow.TemperatureK);
+        }
+
+        private string ReadTextFromEmbeddedResource(string resourceName)
+        {
+            var assembly = this.GetType().Assembly;
+            // var resourceNames = assembly.GetManifestResourceNames();
+            var resourceStream = assembly.GetManifestResourceStream(resourceName);
+            TextReader tr = new StreamReader(resourceStream);
+            var content = tr.ReadToEnd();
+            tr.Close();
+            return content;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             return ConvertResponseToWeatherForecastList(response.Content);
         }
 
-        private IList<WeatherForecast> ConvertResponseToWeatherForecastList(string content)
+        public IList<WeatherForecast> ConvertResponseToWeatherForecastList(string content)
         {
             var json = JObject.Parse(content);
             var jsonArray = json["daily"];
