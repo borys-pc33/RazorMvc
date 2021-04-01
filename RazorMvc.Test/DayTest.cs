@@ -33,12 +33,11 @@ namespace RazorMvc.Tests
             var latitude = 45.75;
             var longitude = 25.3333;
             var APIKey = "35d1f294074ffbb611ac7ee26c783d04";
-            Microsoft.Extensions.Logging.ILogger<WeatherForecastController> nullLogger = new NullLogger<WeatherForecastController>();
-            var weatherForecastController = new WeatherForecastController(nullLogger);
+            var weatherForecastController = CreateWeatherForecastController();
 
             // Act
             var weatherForcasts = weatherForecastController.FetchWeatherForecasts(latitude, longitude, APIKey);
-            WeatherForecast weatherForecastForTommorrow = weatherForcasts[1];
+            var weatherForecastForTommorrow = weatherForcasts[1];
 
             // Assert
             // Forecast is volatile so make sure to change the value accordingly
@@ -51,12 +50,11 @@ namespace RazorMvc.Tests
             // Assume
             string content = ReadTextFromEmbeddedResource("RazorMvc.Tests.WeatherForecastExample.json");
 
-            Microsoft.Extensions.Logging.ILogger<WeatherForecastController> nullLogger = new NullLogger<WeatherForecastController>();
-            var weatherForecastController = new WeatherForecastController(nullLogger);
+            var weatherForecastController = CreateWeatherForecastController();
 
             // Act
             var weatherForcasts = weatherForecastController.ConvertResponseToWeatherForecastList(content);
-            WeatherForecast weatherForecastForTommorrow = weatherForcasts[1];
+            var weatherForecastForTommorrow = weatherForcasts[1];
 
             // Assert
             // Forecast is volatile so make sure to change the value accordingly
@@ -66,12 +64,18 @@ namespace RazorMvc.Tests
         private string ReadTextFromEmbeddedResource(string resourceName)
         {
             var assembly = this.GetType().Assembly;
-            // var resourceNames = assembly.GetManifestResourceNames();
             var resourceStream = assembly.GetManifestResourceStream(resourceName);
-            TextReader tr = new StreamReader(resourceStream);
-            var content = tr.ReadToEnd();
-            tr.Close();
-            return content;
+            using (var tr = new StreamReader(resourceStream))
+            {
+                return tr.ReadToEnd();
+            }
+        }
+
+        private static WeatherForecastController CreateWeatherForecastController()
+        {
+            Microsoft.Extensions.Logging.ILogger<WeatherForecastController> nullLogger = new NullLogger<WeatherForecastController>();
+            var weatherForecastController = new WeatherForecastController(nullLogger);
+            return weatherForecastController;
         }
     }
 }

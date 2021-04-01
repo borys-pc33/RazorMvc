@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorMvc", "RazorMvc.csproj", "{9C456082-DB55-47D1-806E-B1CE20A948DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorMvc.Test", "RazorMvc.Test\RazorMvc.Test.csproj", "{5E474A64-FD75-4B8E-9EF6-9AF9D2E260FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorMvc.Tests", "RazorMvc.Test\RazorMvc.Tests.csproj", "{5E474A64-FD75-4B8E-9EF6-9AF9D2E260FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
