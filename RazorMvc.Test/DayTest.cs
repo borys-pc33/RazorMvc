@@ -37,11 +37,10 @@ namespace RazorMvc.Tests
 
             // Act
             var weatherForcasts = weatherForecastController.FetchWeatherForecasts(latitude, longitude, APIKey);
-            var weatherForecastForTommorrow = weatherForcasts[1];
 
             // Assert
             // Forecast is volatile so make sure to change the value accordingly
-            Assert.Equal(285.39, weatherForecastForTommorrow.TemperatureK);
+            Assert.Equal(8, weatherForcasts.Count);
         }
 
         [Fact]
