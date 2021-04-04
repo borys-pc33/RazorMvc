@@ -14,7 +14,7 @@ namespace RazorMvc.Tests
             // Act
 
             // Assert
-            Assert.Equal(3, intershipService.GetClass().Members.Count);
+            Assert.Equal(3, intershipService.GetMembers().Count);
         }
 
         [Fact]
@@ -27,8 +27,8 @@ namespace RazorMvc.Tests
             intershipService.AddMember("Marko");
 
             // Assert
-            Assert.Equal(4, intershipService.GetClass().Members.Count);
-            Assert.Contains("Marko", intershipService.GetClass().Members);
+            Assert.Equal(4, intershipService.GetMembers().Count);
+            Assert.Contains("Marko", intershipService.GetMembers());
         }
     }
 }

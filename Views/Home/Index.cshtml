@@ -1,6 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Information about our classroom";
-}
+﻿@model IList<string>
+
+@{ ViewData["Title"] = "Information about our classroom"; }
 
 @section styles {
     <!-- Read about this here https://fontawesome.com/icons?d=gallery&p=2 -->
@@ -42,17 +42,16 @@
 <h2>Here is our classroom</h2>
 
 <ul id="list">
-    @for (var i = 0; i < Model.Members.Count; i++)
+    @for (var i = 0; i < Model.Count; i++)
     {
-        var member = Model.Members[i];
+        var member = Model[i];
 
-        <li class="member">
-            <div class="memberInfo">
-                <span class="name">@member</span><i class="delete fa fa-remove"></i>
-                <i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
-            </div>
-        </li>
-    }
+<li class="member">
+    <div class="memberInfo">
+        <span class="name">@member</span><i class="delete fa fa-remove"></i>
+        <i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
+    </div>
+</li>}
 </ul>
 
 <input id="newcomer" title="Name" type="text" />

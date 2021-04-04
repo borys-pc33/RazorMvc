@@ -1,4 +1,5 @@
-﻿using RazorMvc.Models;
+﻿using System.Collections.Generic;
+using RazorMvc.Models;
 
 namespace RazorMvc.Services
 {
@@ -17,9 +18,9 @@ namespace RazorMvc.Services
             return member;
         }
 
-        public InternshipClass GetClass()
+        public IList<string> GetMembers()
         {
-            return _internshipClass;
+            return _internshipClass.Members;
         }
     }
 }

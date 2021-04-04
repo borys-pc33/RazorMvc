@@ -23,7 +23,7 @@ namespace RazorMvc.Controllers
 
         public IActionResult Index()
         {
-            return View(intershipService.GetClass());
+            return View(intershipService.GetMembers());
         }
 
         [HttpDelete]
