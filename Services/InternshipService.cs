@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using RazorMvc.Models;
 
 namespace RazorMvc.Services
@@ -7,18 +9,29 @@ namespace RazorMvc.Services
     {
         private readonly InternshipClass _internshipClass = new ();
 
-        public void RemoveMember(int index)
+        public void RemoveMember(int id)
         {
-            _internshipClass.Members.RemoveAt(index);
+            var itemToBeDeleted = _internshipClass.Members.Single(_ => _.Id == id);
+            _internshipClass.Members.Remove(itemToBeDeleted);
         }
 
-        public string AddMember(string member)
+        public int AddMember(string memberName)
         {
-            _internshipClass.Members.Add(member);
-            return member;
+            var maxId = _internshipClass.Members.Max(_ => _.Id);
+            var newId = maxId + 1;
+
+            var intern = new Intern()
+            {
+                Id = maxId + 1,
+                Name = memberName,
+                DateOfJoin = DateTime.Now,
+            };
+
+            _internshipClass.Members.Add(intern);
+            return newId;
         }
 
-        public IList<string> GetMembers()
+        public IList<Intern> GetMembers()
         {
             return _internshipClass.Members;
         }

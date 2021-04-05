@@ -1,4 +1,5 @@
 ﻿using RazorMvc.Services;
+using System.Linq;
 using Xunit;
 
 namespace RazorMvc.Tests
@@ -28,7 +29,7 @@ namespace RazorMvc.Tests
 
             // Assert
             Assert.Equal(4, intershipService.GetMembers().Count);
-            Assert.Contains("Marko", intershipService.GetMembers());
+            Assert.Contains("Marko", intershipService.GetMembers().Select(member => member.Name));
         }
     }
 }

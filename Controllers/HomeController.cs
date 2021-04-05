@@ -27,15 +27,15 @@ namespace RazorMvc.Controllers
         }
 
         [HttpDelete]
-        public void RemoveMember(int index)
+        public void RemoveMember(int id)
         {
-            intershipService.RemoveMember(index);
+            intershipService.RemoveMember(id);
         }
 
         [HttpGet]
-        public string AddMember(string member)
+        public int AddMember(string memberName)
         {
-            return intershipService.AddMember(member);
+            return intershipService.AddMember(memberName);
         }
 
         public IActionResult Privacy()
