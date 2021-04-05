@@ -11,10 +11,10 @@ namespace RazorMvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly InternshipService intershipService;
+        private readonly IInternshipService intershipService;
         private readonly InternDbContext db;
 
-        public HomeController(ILogger<HomeController> logger, InternshipService intershipService, InternDbContext db)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, InternDbContext db)
         {
             _logger = logger;
             this.intershipService = intershipService;

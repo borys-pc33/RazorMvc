@@ -5,7 +5,7 @@ using RazorMvc.Models;
 
 namespace RazorMvc.Services
 {
-    public class InternshipService
+    public class InternshipService : IInternshipService
     {
         private readonly InternshipClass _internshipClass = new ();
 
