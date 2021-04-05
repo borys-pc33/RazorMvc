@@ -15,6 +15,9 @@ dotnet_diagnostic.SA1309.severity = none
 # SA1101: Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = none
 
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = none
+
 [*.cshtml.cs]
 
 # SA1649: File name should match first type name
