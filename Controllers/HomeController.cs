@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RazorMvc.Data;
@@ -12,13 +13,11 @@ namespace RazorMvc.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IInternshipService intershipService;
-        private readonly InternDbContext db;
 
-        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService, InternDbContext db)
+        public HomeController(ILogger<HomeController> logger, IInternshipService intershipService)
         {
             _logger = logger;
             this.intershipService = intershipService;
-            this.db = db;
         }
 
         public IActionResult Index()
@@ -38,9 +37,15 @@ namespace RazorMvc.Controllers
             return intershipService.AddMember(memberName);
         }
 
+        [HttpPatch]
+        public void Update(int id, [FromBody] string patchDocument)
+        {
+            System.Console.WriteLine($"Updating member {id}");
+        }
+
         public IActionResult Privacy()
         {
-            var interns = db.Interns.ToList();
+            var interns = intershipService.GetMembers();
             return View(interns);
         }
 

@@ -49,6 +49,28 @@ $(document).ready(function () {
     })
 
     $("#editClassmate").on("click", "#submit", function () {
+        let name = $("#classmateName").val();
+        let id = $('#editClassmate').attr("member-id");
+        let data = [
+            {
+                "op": "add",
+                "path": "/name",
+                "value": name
+            }
+        ];
+
+        $.ajax({
+            url: `/Home/Update/${id}`,
+            type: 'PATCH',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function () {
+                console.log('Rename successful')
+            },
+            error: function () {
+                alert(`Failed to update member with id=${id}`);
+            }
+        })
         console.log('submit changes to server');
     })
 
