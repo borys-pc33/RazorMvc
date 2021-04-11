@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -31,10 +33,21 @@ namespace RazorMvc.Controllers
             intershipService.RemoveMember(id);
         }
 
-        [HttpGet]
-        public int AddMember(string memberName)
+        [HttpPost]
+        public async Task<int> AddMember()
         {
-            return intershipService.AddMember(memberName);
+            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                var content = await reader.ReadToEndAsync();
+                Intern intern = JsonConvert.DeserializeObject<Intern>(content);
+                return intershipService.AddMember(intern.Name);
+            }
+        }
+
+        [HttpGet]
+        public IList<Intern> GetAll()
+        {
+            return intershipService.GetMembers();
         }
 
         [HttpPut]

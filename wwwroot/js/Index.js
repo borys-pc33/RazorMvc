@@ -3,12 +3,17 @@ $(document).ready(function () {
     // see https://api.jquery.com/click/
     $("#add").click(function () {
         var newcomerName = $("#newcomer").val();
+        let data = {
+            "name": newcomerName
+        };
 
         $.ajax({
-            url: `/Home/AddMember?memberName=${newcomerName}`,
-            success: function (data) {
+            url: `/Home/AddMember`,
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function (resultData) {
                 // Remember string interpolation
-                $("#list").append(`<li class="member" member-id="${data}">
+                $("#list").append(`<li class="member" member-id="${resultData}">
 		            <span class="name">${newcomerName}</span><i class="delete fa fa-remove"></i><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
 		        </li>`);
 
