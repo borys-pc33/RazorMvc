@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using System.Linq;
-using Microsoft.AspNetCore.JsonPatch;
+using System.IO;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using RazorMvc.Data;
+using Newtonsoft.Json.Linq;
 using RazorMvc.Models;
 using RazorMvc.Services;
 
@@ -37,10 +37,17 @@ namespace RazorMvc.Controllers
             return intershipService.AddMember(memberName);
         }
 
-        [HttpPatch]
-        public void Update(int id, [FromBody] string patchDocument)
+        [HttpPut]
+        public async void Update(int id)
         {
             System.Console.WriteLine($"Updating member {id}");
+            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                var content = await reader.ReadToEndAsync();
+                dynamic jToken = JToken.Parse(content);
+                string newName = (string)jToken.name;
+                intershipService.RenameMember(id, newName);
+            }
         }
 
         public IActionResult Privacy()
