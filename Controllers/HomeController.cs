@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using RazorMvc.Models;
 using RazorMvc.Services;
 
@@ -44,9 +44,8 @@ namespace RazorMvc.Controllers
             using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 var content = await reader.ReadToEndAsync();
-                dynamic jToken = JToken.Parse(content);
-                string newName = (string)jToken.name;
-                intershipService.RenameMember(id, newName);
+                Intern intern = JsonConvert.DeserializeObject<Intern>(content);
+                intershipService.RenameMember(id, intern.Name);
             }
         }
 
