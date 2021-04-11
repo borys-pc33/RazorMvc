@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RazorMvc.Models;
 using RazorMvc.Services;
 
@@ -27,34 +22,9 @@ namespace RazorMvc.Controllers
             return View(intershipService.GetMembers());
         }
 
-        [HttpDelete]
-        public void RemoveMember(int id)
-        {
-            intershipService.RemoveMember(id);
-        }
-
-        [HttpPost]
-        public async Task<int> AddMember([FromBody] Intern intern)
-        {
-            return intershipService.AddMember(intern.Name);
-        }
-
-        [HttpGet]
-        public IList<Intern> GetAll()
-        {
-            return intershipService.GetMembers();
-        }
-
-        [HttpPut]
-        public async void Update(int id, [FromBody] Intern intern)
-        {
-            intershipService.RenameMember(id, intern.Name);
-        }
-
         public IActionResult Privacy()
         {
-            var interns = intershipService.GetMembers();
-            return View(interns);
+            return View(intershipService.GetMembers());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

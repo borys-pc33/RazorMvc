@@ -23,6 +23,12 @@ namespace RazorMvc.Services
             return intern.Id;
         }
 
+        public Intern GetMember(int id)
+        {
+            var intern = db.Find<Intern>(id);
+            return intern;
+        }
+
         public IList<Intern> GetMembers()
         {
             return db.Interns.ToList();

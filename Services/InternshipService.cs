@@ -41,5 +41,10 @@ namespace RazorMvc.Services
             var itemToBeChanged = _internshipClass.Members.Single(_ => _.Id == id);
             itemToBeChanged.Name = newName;
         }
+
+        public Intern GetMember(int id)
+        {
+            return _internshipClass.Members.Single(_ => _.Id == id);
+        }
     }
 }

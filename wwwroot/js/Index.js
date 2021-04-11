@@ -8,7 +8,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: `/Home/AddMember`,
+            url: `/Intern`,
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
@@ -35,7 +35,7 @@ $(document).ready(function () {
         var targetMemberTag = $(this).closest('li');
         var id = targetMemberTag.attr('member-id');
         $.ajax({
-            url: `/Home/RemoveMember/${id}`,
+            url: `/Intern/${id}`,
             type: 'DELETE',
             success: function () {
                 targetMemberTag.remove();
@@ -62,7 +62,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: `/Home/Update/${id}`,
+            url: `/Intern/${id}`,
             type: 'PUT',
             data: JSON.stringify(data),
             contentType: 'application/json',
