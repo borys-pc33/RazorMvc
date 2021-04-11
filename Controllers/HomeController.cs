@@ -34,14 +34,9 @@ namespace RazorMvc.Controllers
         }
 
         [HttpPost]
-        public async Task<int> AddMember()
+        public async Task<int> AddMember([FromBody] Intern intern)
         {
-            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
-            {
-                var content = await reader.ReadToEndAsync();
-                Intern intern = JsonConvert.DeserializeObject<Intern>(content);
-                return intershipService.AddMember(intern.Name);
-            }
+            return intershipService.AddMember(intern.Name);
         }
 
         [HttpGet]
@@ -51,15 +46,9 @@ namespace RazorMvc.Controllers
         }
 
         [HttpPut]
-        public async void Update(int id)
+        public async void Update(int id, [FromBody] Intern intern)
         {
-            System.Console.WriteLine($"Updating member {id}");
-            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
-            {
-                var content = await reader.ReadToEndAsync();
-                Intern intern = JsonConvert.DeserializeObject<Intern>(content);
-                intershipService.RenameMember(id, intern.Name);
-            }
+            intershipService.RenameMember(id, intern.Name);
         }
 
         public IActionResult Privacy()

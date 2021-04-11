@@ -11,6 +11,7 @@ $(document).ready(function () {
             url: `/Home/AddMember`,
             type: 'POST',
             data: JSON.stringify(data),
+            contentType: 'application/json',
             success: function (resultData) {
                 // Remember string interpolation
                 $("#list").append(`<li class="member" member-id="${resultData}">
