@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RazorMvc.Data;
+using RazorMvc.Hubs;
 using RazorMvc.Services;
 
 namespace RazorMvc
@@ -32,6 +33,7 @@ namespace RazorMvc
 
             services.AddControllersWithViews();
             services.AddScoped<IInternshipService, DbInternshipService>();
+            services.AddSignalR();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RazorMvc API", Version = "v1" });
@@ -73,6 +75,7 @@ namespace RazorMvc
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<MessageHub>("/messagehub");
             });
         }
     }
