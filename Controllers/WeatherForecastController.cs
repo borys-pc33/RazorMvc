@@ -38,6 +38,7 @@ namespace WebAPI.Controllers
             .ToArray();
         }
 
+        [HttpGet("/forecast")]
         public IList<WeatherForecast> FetchWeatherForecasts(double latitude, double longitude, string apiKey)
         {
             var client = new RestClient($"https://api.openweathermap.org/data/2.5/onecall?lat={latitude}&lon={longitude}&exclude=hourly,minutely&appid={apiKey}");
@@ -47,6 +48,8 @@ namespace WebAPI.Controllers
             return ConvertResponseToWeatherForecastList(response.Content);
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [NonAction]
         public IList<WeatherForecast> ConvertResponseToWeatherForecastList(string content)
         {
             var json = JObject.Parse(content);
