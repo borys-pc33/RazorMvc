@@ -8,13 +8,9 @@ namespace RazorMvc.Hubs
 {
     public class MessageHub : Hub, IAddMemberSubscriber
     {
-        private readonly InternshipObservable internshipObservable;
-
-        public MessageHub(InternshipObservable internshipObservable)
+        public MessageHub()
         {
             Console.WriteLine("MessageHub is created.");
-            this.internshipObservable = internshipObservable;
-            internshipObservable.SubscribeToAddMember(this);
         }
 
         public async void OnAddMember(Intern member)
@@ -25,12 +21,6 @@ namespace RazorMvc.Hubs
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            internshipObservable.UnsubscribeFromAddMember(this);
-            base.Dispose(disposing);
         }
     }
 }

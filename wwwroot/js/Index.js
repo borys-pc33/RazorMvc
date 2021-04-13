@@ -13,11 +13,6 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (resultData) {
-                // Remember string interpolation
-                $("#list").append(`<li class="member" member-id="${resultData}">
-		            <span class="name">${newcomerName}</span><i class="delete fa fa-remove"></i><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
-		        </li>`);
-
                 $("#newcomer").val("");
             },
             error: function (data) {
@@ -26,6 +21,12 @@ $(document).ready(function () {
         });
     })
 
+    function createNewcomer(name, id) {
+        // Remember string interpolation
+        $("#list").append(`<li class="member" member-id="${id}">
+		            <span class="name">${name}</span><i class="delete fa fa-remove"></i><i class="startEdit fa fa-pencil" data-toggle="modal" data-target="#editClassmate"></i>
+		        </li>`);
+    }
     $("#clear").click(function () {
         $("#newcomer").val("");
     })
@@ -85,8 +86,8 @@ $(document).ready(function () {
         .withAutomaticReconnect()
         .build();
 
-    connection.on("AddUser", function (name, id) {
-        alert(`User ${name} with id=${id} was added.`)
+    connection.on("AddMember", function (name, id) {
+        createNewcomer(name, id);
     });
 
     connection.start().then(function () {

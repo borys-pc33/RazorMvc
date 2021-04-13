@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using RazorMvc.Hubs;
 using RazorMvc.Models;
 using RazorMvc.Services;
 
@@ -10,10 +12,14 @@ namespace RazorMvc.Controllers
     public class InternController : ControllerBase
     {
         private readonly IInternshipService internshipService;
+        private readonly IHubContext<MessageHub> messageHubContext;
 
-        public InternController(IInternshipService internshipService)
+        public InternController(
+            IInternshipService internshipService,
+            IHubContext<MessageHub> messageHubContext)
         {
             this.internshipService = internshipService;
+            this.messageHubContext = messageHubContext;
         }
 
         // GET: api/<InternController>
@@ -34,7 +40,10 @@ namespace RazorMvc.Controllers
         [HttpPost]
         public int Post([FromBody] Intern intern)
         {
-            return internshipService.AddMember(intern.Name);
+            int newId = internshipService.AddMember(intern.Name);
+            messageHubContext.Clients.All.SendAsync("AddMember", intern.Name, newId);
+
+            return newId;
         }
 
         // PUT api/<InternController>/5
