@@ -41,6 +41,7 @@ namespace RazorMvc.Controllers
         public int Post([FromBody] Intern intern)
         {
             int newId = internshipService.AddMember(intern.Name);
+
             messageHubContext.Clients.All.SendAsync("AddMember", intern.Name, newId);
 
             return newId;
