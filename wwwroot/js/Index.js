@@ -78,4 +78,21 @@ $(document).ready(function () {
     $("#editClassmate").on("click", "#cancel", function () {
         console.log('cancel changes');
     })
+
+    var connection = new signalR.HubConnectionBuilder()
+        .withUrl("/messagehub")
+        .configureLogging(signalR.LogLevel.Information)
+        .withAutomaticReconnect()
+        .build();
+
+    connection.on("AddUser", function (name, id) {
+        alert(`User ${name} with id=${id} was added.`)
+    });
+
+    connection.start().then(function () {
+        console.assert(connection.state === signalR.HubConnectionState.Connected);
+        console.log('Connection started.')
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
 });

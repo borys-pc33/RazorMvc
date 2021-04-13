@@ -9,10 +9,12 @@ namespace RazorMvc.Services
     public class DbInternshipService : IInternshipService
     {
         private readonly InternDbContext db;
+        private readonly InternshipObservable internshipObservable;
 
-        public DbInternshipService(InternDbContext db)
+        public DbInternshipService(InternDbContext db, InternshipObservable internshipObservable)
         {
             this.db = db;
+            this.internshipObservable = internshipObservable;
         }
 
         public int AddMember(string memberName)
@@ -20,6 +22,9 @@ namespace RazorMvc.Services
             var intern = new Intern { Name = memberName, DateOfJoin = DateTime.Now };
             db.Interns.Add(intern);
             db.SaveChanges();
+
+            internshipObservable.FireAddMember(intern);
+
             return intern.Id;
         }
 

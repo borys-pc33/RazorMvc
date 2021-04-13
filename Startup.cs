@@ -32,6 +32,7 @@ namespace RazorMvc
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddControllersWithViews();
+            services.AddSingleton<InternshipObservable>();
             services.AddScoped<IInternshipService, DbInternshipService>();
             services.AddSignalR();
             services.AddSwaggerGen(c =>
