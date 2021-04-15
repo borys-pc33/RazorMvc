@@ -24,6 +24,11 @@ namespace RazorMvc.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public IActionResult Groups()
+        {
             return View(intershipService.GetMembers());
         }
 

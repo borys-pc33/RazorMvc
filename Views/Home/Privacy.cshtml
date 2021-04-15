@@ -1,56 +1,8 @@
 @model IEnumerable<RazorMvc.Models.Intern>
 
-@section styles {
-    <!-- Read about this here https://fontawesome.com/icons?d=gallery&p=2 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-}
+@{ ViewData["Title"] = "Privacy Policy"; }
+<h1>@ViewData["Title"]</h1>
 
-    @{ ViewData["Title"] = "Forming groups from interns"; }
-    <h1>@ViewData["Title"]</h1>
+<p>We respect privacy, GDPR and other stuff very much. Don't worry, be happy!</p>
 
-    <p>We respect privacy, GDPR and other stuff very much. Don't worry, be happy!</p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Check
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateOfJoin)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-<tr>
-    <td>
-        <input type="checkbox" name="check" member-id="@item.Id" value="false" />
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DateOfJoin)
-    </td>
-</tr>
-}
-        </tbody>
-    </table>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Group Name</span>
-        </div>
-        <input type="text" class="form-control" placeholder="Group Name" aria-label="Group Name" aria-describedby="basic-addon1">
-    </div>
-
-    <button id="createGroup" class="btn btn-primary">
-        <i class="fa fa-plus-circle"></i>
-        Create Group
-    </button>
