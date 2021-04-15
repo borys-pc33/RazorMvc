@@ -9,7 +9,7 @@ Application is deployed to [heroku](https://borys-internship-class.herokuapp.com
 To work with this application you need to install:
 * [.Net Core SDK 5.0+](https://dotnet.microsoft.com/download/dotnet/5.0) - to run and develop the application
 * [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) - to deploy the application
-* [MSSQL Server 2019](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - database engine
+* [Postgres](https://www.postgresql.org/download/) - database engine (replaced MS SQL since 15.04)
 
 ## Build and run locally
 
@@ -59,6 +59,7 @@ CI is implemented in [github](.github/workflows/dotnet.yml)
 
 Login to heroku
 ```
+heroku login
 heroku container:login
 ```
 
