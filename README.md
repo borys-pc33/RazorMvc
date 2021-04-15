@@ -17,6 +17,12 @@ To work with this application you need to install:
 dotnet build
 ```
 
+to execute tests
+
+```
+dotnet test
+```
+
 to run
 ```
 dotnet run
@@ -33,10 +39,15 @@ to stop container
 ```
 docker stop mvc_container
 ```
+
 to remove container
 ```
 docker rm mvc_container
 ```
+
+## CI
+
+CI is implemented in [github](.github/workflows/dotnet.yml)
 
 ## Deploy to heroku
 
