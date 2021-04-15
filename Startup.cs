@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
@@ -15,19 +16,35 @@ namespace RazorMvc
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private string _connectionString;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+
+            _connectionString = env.IsDevelopment()
+                ? Configuration.GetConnectionString("DefaultConnection")
+                : GetHerokuConnectionString(Environment.GetEnvironmentVariable("DATABASE_URL"));
         }
 
         public IConfiguration Configuration { get; }
+
+        public static string GetHerokuConnectionString(string connectionUrl)
+        {
+            // parse the connection string
+            var databaseUri = new Uri(connectionUrl);
+
+            string db = databaseUri.LocalPath.TrimStart('/');
+            string[] userInfo = databaseUri.UserInfo.Split(':', StringSplitOptions.RemoveEmptyEntries);
+
+            return $"User ID={userInfo[0]};Password={userInfo[1]};Host={databaseUri.Host};Port={databaseUri.Port};Database={db};Pooling=true;SSL Mode=Require;Trust Server Certificate=True;";
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<InternDbContext>(options =>
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(_connectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
