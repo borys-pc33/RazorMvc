@@ -31,23 +31,23 @@ dotnet run
 ## Build and run in docker
 
 ```
-docker build -t mvc .
-docker run -d -p 8080:80 --name mvc_container mvc
+docker build -t mvc_borys .
+docker run -d -p 8081:80 --name mvc_container_borys mvc_borys
 ```
 
 to stop container
 ```
-docker stop mvc_container
+docker stop mvc_container_borys
 ```
 
 to remove container
 ```
-docker rm mvc_container
+docker rm mvc_container_borys
 ```
 
 ## CI
 
-CI is implemented in [github](.github/workflows/dotnet.yml)
+CI is implemented in [github](.github/workflows/dotnet.yml). The pipeline actions can be seen [here](https://github.com/borys-pc33/RazorMvc/actions)
 
 ## Deploy to heroku
 
