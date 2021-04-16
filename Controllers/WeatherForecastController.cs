@@ -21,8 +21,10 @@ namespace WebAPI.Controllers
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
         {
-            latitude = double.Parse(configuration["WeatherForecast:Latitude"], CultureInfo.InvariantCulture);
-            longitude = double.Parse(configuration["WeatherForecast:Longitude"], CultureInfo.InvariantCulture);
+            var strLatitude = Environment.GetEnvironmentVariable("WEATHER_FORECAST_LATITUDE") ?? configuration["WeatherForecast:Latitude"];
+            latitude = double.Parse(strLatitude, CultureInfo.InvariantCulture);
+            var strLongitude = Environment.GetEnvironmentVariable("WEATHER_FORECAST_LONGITUDE") ?? configuration["WeatherForecast:Longitude"];
+            longitude = double.Parse(strLongitude, CultureInfo.InvariantCulture);
             apiKey = configuration["WeatherForecast:APIKey"];
             this.logger = logger;
         }
