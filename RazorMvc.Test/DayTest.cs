@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging.Abstractions;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using RazorMvc.Utilities;
 using System;
 using System.IO;
@@ -36,7 +37,7 @@ namespace RazorMvc.Tests
             var weatherForecastController = CreateWeatherForecastController();
 
             // Act
-            var weatherForcasts = weatherForecastController.FetchWeatherForecasts(latitude, longitude, APIKey);
+            var weatherForcasts = weatherForecastController.Get(latitude, longitude, APIKey);
 
             // Assert
             // Forecast is volatile so make sure to change the value accordingly
@@ -73,7 +74,10 @@ namespace RazorMvc.Tests
         private static WeatherForecastController CreateWeatherForecastController()
         {
             Microsoft.Extensions.Logging.ILogger<WeatherForecastController> nullLogger = new NullLogger<WeatherForecastController>();
-            var weatherForecastController = new WeatherForecastController(nullLogger);
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            var weatherForecastController = new WeatherForecastController(nullLogger, builder.Build());
             return weatherForecastController;
         }
     }
