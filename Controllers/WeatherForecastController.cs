@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using RazorMvc.Utilities;
@@ -13,33 +14,29 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching",
-        };
+        private readonly double latitude;
+        private readonly double longitude;
+        private readonly string apiKey;
+        private readonly ILogger<WeatherForecastController> logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
         {
-            _logger = logger;
+            latitude = double.Parse(configuration["WeatherForecast:Latitude"], CultureInfo.InvariantCulture);
+            longitude = double.Parse(configuration["WeatherForecast:Longitude"], CultureInfo.InvariantCulture);
+            apiKey = configuration["WeatherForecast:APIKey"];
+            this.logger = logger;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public List<WeatherForecast> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureK = rng.Next(250, 320),
-                Summary = Summaries[rng.Next(Summaries.Length)],
-            })
-            .ToArray();
+            List<WeatherForecast> weahterForecasts = Get(latitude, longitude, apiKey);
+
+            return weahterForecasts.GetRange(1, 5);
         }
 
         [HttpGet("/forecast")]
-        public IList<WeatherForecast> FetchWeatherForecasts(double latitude, double longitude, string apiKey)
+        public List<WeatherForecast> Get(double latitude, double longitude, string apiKey)
         {
             var client = new RestClient($"https://api.openweathermap.org/data/2.5/onecall?lat={latitude}&lon={longitude}&exclude=hourly,minutely&appid={apiKey}");
             client.Timeout = -1;
@@ -50,25 +47,25 @@ namespace WebAPI.Controllers
 
         [ApiExplorerSettings(IgnoreApi = true)]
         [NonAction]
-        public IList<WeatherForecast> ConvertResponseToWeatherForecastList(string content)
+        public List<WeatherForecast> ConvertResponseToWeatherForecastList(string content)
         {
             var json = JObject.Parse(content);
             var jsonArray = json["daily"];
-            IList<WeatherForecast> weatherForecasts = new List<WeatherForecast>();
+            List<WeatherForecast> weatherForecasts = new List<WeatherForecast>();
             foreach (var item in jsonArray)
             {
-                WeatherForecast obj = new WeatherForecast();
-                obj.Date = DateTimeConvertor.ConvertEpochToDateTime(item.Value<long>("dt"));
-                obj.TemperatureK = item.SelectToken("temp").Value<double>("day");
-                obj.Summary = item.SelectToken("weather")[0].Value<string>("main");
-
                 try
                 {
+                    WeatherForecast obj = new WeatherForecast();
+                    obj.Date = DateTimeConvertor.ConvertEpochToDateTime(item.Value<long>("dt"));
+                    obj.TemperatureK = item.SelectToken("temp").Value<double>("day");
+                    obj.Summary = item.SelectToken("weather")[0].Value<string>("main");
+
                     weatherForecasts.Add(obj);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    logger.LogError(ex, "Cannot get parse weather forecast.");
                 }
             }
 
