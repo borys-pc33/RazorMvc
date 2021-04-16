@@ -11,6 +11,25 @@ To work with this application you need to install:
 * [heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) - to deploy the application
 * [Postgres](https://www.postgresql.org/download/) - database engine (replaced MS SQL since 15.04)
 
+### Starting local development database server
+Postgres should be up and running (assuming pgdata is located at C:\pgdata and pg_ctl is in the PATH variable)
+
+```
+pg_ctl start -D C:\pgdata
+```
+
+to check the status
+
+```
+pg_ctl status -D C:\pgdata
+```
+
+to stop the server
+```
+pg_ctl start -D C:\pgdata
+```
+
+
 ## Build and run locally
 
 ```
