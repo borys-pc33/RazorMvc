@@ -15,7 +15,7 @@ namespace RazorMvc.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    DateOfJoin = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    DateOfJoin = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                 },
                 constraints: table =>
                 {
